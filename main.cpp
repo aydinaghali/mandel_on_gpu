@@ -93,13 +93,13 @@ int main(){
 	paramCont[9] = step_y;
 	
 	MTL::TextureDescriptor* textureDesc = MTL::TextureDescriptor::alloc()->init();
-    textureDesc->setWidth(WIDTH);
-    textureDesc->setHeight(HEIGHT);
-    textureDesc->setPixelFormat( MTL::PixelFormatRGBA8Unorm );
-    textureDesc->setTextureType( MTL::TextureType2D );
-    textureDesc->setStorageMode( MTL::StorageModeManaged );
-    textureDesc->setUsage( MTL::ResourceUsageSample | MTL::ResourceUsageRead | MTL::ResourceUsageWrite);
-    MTL::Texture *texture = device->newTexture( textureDesc );
+	textureDesc->setWidth(WIDTH);
+	textureDesc->setHeight(HEIGHT);
+	textureDesc->setPixelFormat( MTL::PixelFormatRGBA8Unorm );
+	textureDesc->setTextureType( MTL::TextureType2D );
+	textureDesc->setStorageMode( MTL::StorageModeManaged );
+	textureDesc->setUsage( MTL::ResourceUsageSample | MTL::ResourceUsageRead | MTL::ResourceUsageWrite);
+	MTL::Texture *texture = device->newTexture( textureDesc );
 	assert(texture!=NULL);
 
 	MTL::CommandBuffer* commandBuffer = commandQueue->commandBuffer();
