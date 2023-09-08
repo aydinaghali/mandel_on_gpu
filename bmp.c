@@ -6,6 +6,9 @@
 #define WRITE_3BYTES(val) fprintf(img->outfile, "%c%c%c", (val), (val)>>8, (val)>>16) 
 #define WRITE_4BYTES(val) fprintf(img->outfile, "%c%c%c%c", (val), (val)>>8, (val)>>16, (val)>>24)
 
+#define OFFSET2(val) (val), (val)>>8
+#define OFFSET4(val) (val), (val)>>8, (val)>>16, (val)>>24
+
 void bmp_init(bmp* img, const char* outfile_name, unsigned int width, unsigned int height){
 	if( !(img->outfile = fopen(outfile_name, "w")) ){
 		fprintf(stderr, "Couldn't open file\n");
@@ -22,14 +25,15 @@ void bmp_write_header(bmp* img){
 	const unsigned int offset = 26;
 	char buff[27];
 	sprintf(buff, "BM%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c",
-			size, size>>8, size>>16, size>>24,
-			'\0', '\0', '\0', '\0',
-			offset, offset>>8, offset>>16, offset>>24,
-			12U, 12U>>8, 12U>>16, 12U>>24,
-			img->width, img->width>>8,
-			img->height, img->height>>8,
-			1U, 1U>>8,
-			24U, 24U>>8);
+		OFFSET4(size),
+		OFFSET4('\0'),
+		OFFSET4(offset),
+		OFFSET4(12U),
+		OFFSET2(img->width),
+		OFFSET2(img->height),
+		OFFSET2(1U),
+		OFFSET2(24U)
+	);
 
 	fwrite(buff, 1, 26, img->outfile);
 }
